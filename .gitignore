@@ -9,5 +9,6 @@
 /build/
 /vendor/
 /.idea/
+/node_modules/
 /bin/
 /composer.phar
