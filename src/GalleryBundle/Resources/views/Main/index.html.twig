@@ -1,0 +1,12 @@
+{% for album in albums %}
+    <div>
+        <span>
+            <a href="{{ path('album_show', { 'id': album.id }) }}">
+            {{ album.name }}
+            </a>
+        </span>
+        {% for images in album %}
+            <span>{{ dump(images.getValues()) }}</span>
+        {% endfor %}
+    </div>
+{% endfor %}

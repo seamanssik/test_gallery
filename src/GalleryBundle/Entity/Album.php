@@ -1,46 +1,35 @@
 <?php
+
 namespace GalleryBundle\Entity;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Album
- *
- * @ORM\Table(name="album")
- * @ORM\Entity(repositoryClass="GalleryBundle\AlbumRepository")
  */
 class Album
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer
      */
     private $id;
+
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+
     /**
-     * @var int
-     *
-     * @ORM\OneToMany(
-     *     targetEntity="GalleryBundle\Entity\Image",
-     *     mappedBy="GalleryBundle\Entity\Album"
-     * )
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $images;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->images = new ArrayCollection();
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
     /**
      * Get id
      *
@@ -50,17 +39,21 @@ class Album
     {
         return $this->id;
     }
+
     /**
      * Set name
      *
      * @param string $name
+     *
      * @return Album
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
+
     /**
      * Get name
      *
@@ -70,33 +63,39 @@ class Album
     {
         return $this->name;
     }
+
     /**
-     * Add images
+     * Add image
      *
-     * @param Image $images
+     * @param \GalleryBundle\Entity\Image $image
+     *
      * @return Album
      */
-    public function addImage(Image $images)
+    public function addImage(\GalleryBundle\Entity\Image $image)
     {
-        $this->images[] = $images;
+        $this->images[] = $image;
+
         return $this;
     }
+
     /**
-     * Remove images
+     * Remove image
      *
-     * @param Image $images
+     * @param \GalleryBundle\Entity\Image $image
      */
-    public function removeImage(Image $images)
+    public function removeImage(\GalleryBundle\Entity\Image $image)
     {
-        $this->images->removeElement($images);
+        $this->images->removeElement($image);
     }
+
     /**
      * Get images
      *
-     * @return Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getImages()
     {
         return $this->images;
     }
 }
+

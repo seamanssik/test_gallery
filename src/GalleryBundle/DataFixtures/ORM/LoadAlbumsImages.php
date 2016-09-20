@@ -8,15 +8,16 @@ class LoadAlbumsImages implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 1; $i < 6; $i++) {
             $album = new Album();
             $album->setName('Album -' . $i);
             $manager->persist($album);
-            $max = $i === 0 ? 5 : 21;
-            for ($n = 0; $n < $max; $n++) {
+            $max = $i === 1 ? 6 : 22;
+            for ($n = 1; $n < $max; $n++) {
                 $image = new Image();
-                $image->setName('Img- ' . $n . 'Album- ' . $i);
-                $image->setAlbum($album);
+                $image->setName('name-' . $i . $n );
+                $image->setImage('Image-' . $i . $n);
+                $image->setAlbums($album);
                 $manager->persist($image);
             }
         }

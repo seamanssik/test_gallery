@@ -1,41 +1,32 @@
 <?php
+
 namespace GalleryBundle\Entity;
-use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Image
- *
- * @ORM\Table(name="image")
- * @ORM\Entity(repositoryClass="GalleryBundle\Image")
  */
 class Image
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer
      */
     private $id;
-    /**
-     * @var int
-     *
-     * @ORM\ManyToOne(targetEntity="GalleryBundle\Entity\Album")
-     * @ORM\JoinColumn(
-     *     name="album_id",
-     *     referencedColumnName="id",
-     *     nullable=false,
-     *     onDelete="CASCADE"
-     * )
-     */
-    private $album;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+
+    /**
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @var \GalleryBundle\Entity\Album
+     */
+    private $albums;
+
 
     /**
      * Get id
@@ -46,32 +37,21 @@ class Image
     {
         return $this->id;
     }
-    /**
-     * @return Album
-     */
-    public function getAlbum()
-    {
-        return $this->album;
-    }
-    /**
-     * @param Album $album
-     */
-    public function setAlbum(Album $album)
-    {
-        $this->album = $album;
-    }
 
     /**
      * Set name
      *
      * @param string $name
-     * @return Album
+     *
+     * @return Image
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
+
     /**
      * Get name
      *
@@ -81,4 +61,53 @@ class Image
     {
         return $this->name;
     }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set albums
+     *
+     * @param \GalleryBundle\Entity\Album $albums
+     *
+     * @return Image
+     */
+    public function setAlbums(\GalleryBundle\Entity\Album $albums = null)
+    {
+        $this->albums = $albums;
+
+        return $this;
+    }
+
+    /**
+     * Get albums
+     *
+     * @return \GalleryBundle\Entity\Album
+     */
+    public function getAlbums()
+    {
+        return $this->albums;
+    }
 }
+

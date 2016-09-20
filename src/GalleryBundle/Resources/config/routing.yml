@@ -1,3 +1,11 @@
-gallery_homepage:
-    path:     /
-    defaults: { _controller: GalleryBundle:Default:index }
+homepage:
+    path:      /
+    defaults:  { _controller: GalleryBundle:Main:index }
+
+album_show:
+    path:      /album/{id}
+    defaults:  { _controller: GalleryBundle:Main:show }
+
+album_show__page:
+    path:      /album/{id}/page/{page}
+    defaults:  { _controller: GalleryBundle:Main:show, page: 1 }

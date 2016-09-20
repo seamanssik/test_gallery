@@ -1,7 +1,24 @@
-gallery:
-    resource: "@GalleryBundle/Resources/config/routing.yml"
-    prefix:   /
+homepage:
+    path:      /
+    defaults:  { _controller: GalleryBundle:Main:index }
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+album_show:
+    path:      /album/{id}
+    defaults:  { _controller: GalleryBundle:Main:show }
+    requirements:
+            id: '\d+'
+            _method: GET
+
+redirect_page:
+    path: /album/{id}/page
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: album_show
+        permanent: true
+
+album_show_page:
+    pattern: /album/{id}/page/{page}
+    defaults: {_controller: GalleryBundle:Main:show, page: 1 }
+    requirements:
+            page: '\d+'
+            _method: GET
