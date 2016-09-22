@@ -9,12 +9,12 @@ album_show:
             id: '\d+'
             _method: GET
 
-redirect_page:
-    path: /album/{id}/page
-    defaults:
-        _controller: FrameworkBundle:Redirect:redirect
-        route: album_show
-        permanent: true
+#redirect_page:
+#    path: /album/{id}/page
+#    defaults:
+#        _controller: FrameworkBundle:Redirect:redirect
+#        route: album_show
+#        permanent: true
 
 album_show_page:
     pattern: /album/{id}/page/{page}

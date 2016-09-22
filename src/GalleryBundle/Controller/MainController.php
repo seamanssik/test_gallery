@@ -5,6 +5,7 @@ namespace GalleryBundle\Controller;
 use GalleryBundle\Entity\Album;
 use GalleryBundle\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends Controller
 {
@@ -22,7 +23,7 @@ class MainController extends Controller
     public function showAction($id, $page = 1)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $albums = $em->getRepository('GalleryBundle:Album')->find($id);
+        $album = $em->getRepository('GalleryBundle:Album')->find($id);
 
         $dql   = "SELECT a FROM GalleryBundle:Image a WHERE a.albums = :id";
         $query = $em->createQuery($dql)->setParameters(
@@ -39,14 +40,21 @@ class MainController extends Controller
         );
         $pagination->setUsedRoute('album_show_page'); /*define the pagination route*/
 
+        $serializedEntity = $this->container->get('serializer')->serialize($pagination, 'json');
+
+        return new Response($serializedEntity);
+
+
+
+
 
 
 //        $images = $albums->getImages()->getValues();
 //
-        return $this->render('GalleryBundle:Main:show.html.twig', array(
-            'pagination'    => $pagination,
-            'albums'      => $albums
+//        return $this->render('GalleryBundle:Main:show.html.twig', array(
+//            'pagination'    => $pagination,
+//            'album'      => $album
 //            'images'      => $images
-        ));
+//        ));
     }
 }

@@ -1,3 +1,6 @@
+{% extends 'GalleryBundle:Main:base.html.twig' %}
+
+{% block body %}
 {% for album in albums %}
     <div>
         <span>
@@ -5,8 +8,6 @@
             {{ album.name }}
             </a>
         </span>
-        {% for images in album %}
-            <span>{{ dump(images.getValues()) }}</span>
-        {% endfor %}
     </div>
 {% endfor %}
+{% endblock %}

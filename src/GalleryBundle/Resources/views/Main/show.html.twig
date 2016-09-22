@@ -1,28 +1,58 @@
-<body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<div id="dish-select-component-canvas">
-    {% for image in pagination %}
-        <span>{{ image.name }}</span><br>
-    {% endfor %}
+{% extends 'GalleryBundle:Main:base.html.twig' %}
 
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
-    </div>
-</div>
+{% block body %}
+    <h1>Total images: <span id="totalCount" class="text-success"></span></h1>
 
-<script>
-    $(function () {
-        $('#dish-select-component-canvas').on('click', "div.pagination a", function (e) {
-            $.ajax({
-                type: "GET",
-                url: $(this).attr('href'),
-            })
-                    .done(function (msg) {
-                        $('body').html(msg);
-                    });
-            e.preventDefault();
-        });
-    });
-</script>
-</body>
+    <table id="items" class="table table-striped">
+     <thead>
+     <tr>
+         <th>ID</th>
+         <th>Img</th>
+     </tr>
+     </thead>
+    </table>
+
+    <script id="itemTemplate" type="text/html">
+     <td width="1"><%= id %></td>
+     <td><img src="{{ asset('apple-touch-icon.png') }}"/></td>
+    </script>
+
+    <div id="paginationHtml" class="navigation"></div>
+{% endblock %}
+
+{#<script src="{{ asset('app/dist/app.min.js') }}"></script>#}
+{#<body>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>#}
+{#<script src="{{ asset('app/dist/app.min.js') }}"></script>#}
+{#<div id="content">#}
+{#<span class="album_id" id="{{ album.id }}"></span>#}
+    {#{% for image in pagination %}#}
+        {#<span>{{ image.name }}</span><br>#}
+    {#{% endfor %}#}
+
+    {#<div class="navigation">#}
+        {#{{ knp_pagination_render(pagination) }}#}
+    {#</div>#}
+{#</div>#}
+
+{#<script>#}
+    {#$(function () {#}
+        {#$('#content').on('click', "div.pagination a", function (e) {#}
+            {#var page = $(this).text();#}
+            {#$.ajax({#}
+                {#type: "GET",#}
+                {#url: $(this).attr('href'),#}
+            {#})#}
+                    {#.done(function (msg) {#}
+                        {#if (window.history.replaceState) {#}
+                            {#window.history.replaceState('', '', '/album/' + $('.album_id').attr('id') + '/page/' + page);#}
+                        {#}#}
+
+                        {#$('body').html(msg);#}
+                    {#});#}
+            {#e.preventDefault();#}
+        {#});#}
+    {#});#}
+{#</script>#}
+{#</body>#}
 
