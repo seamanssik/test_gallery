@@ -38,7 +38,7 @@ function compile(watch) {
             .pipe(sourcemaps.init({
                 loadMaps: true
             }))
-            .pipe(uglify().on('error', e => console.log(e)))
+            // .pipe(uglify().on('error', e => console.log(e)))
     .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest('./web/app/dist'));
     }

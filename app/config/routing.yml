@@ -2,8 +2,12 @@ homepage:
     path:      /
     defaults:  { _controller: GalleryBundle:Main:index }
 
+homepage_data:
+    path:      /api/homepage
+    defaults:  { _controller: GalleryBundle:Main:getHomePage }
+
 album_show:
-    path:      /album/{id}
+    path:      /api/album/{id}
     defaults:  { _controller: GalleryBundle:Main:show }
     requirements:
             id: '\d+'
@@ -17,7 +21,7 @@ album_show:
 #        permanent: true
 
 album_show_page:
-    pattern: /album/{id}/page/{page}
+    pattern: /api/album/{id}/page/{page}
     defaults: {_controller: GalleryBundle:Main:show, page: 1 }
     requirements:
             page: '\d+'

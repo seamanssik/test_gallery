@@ -40,7 +40,7 @@ class MainController extends Controller
         );
         $pagination->setUsedRoute('album_show_page'); /*define the pagination route*/
 
-        $serializedEntity = $this->container->get('serializer')->serialize($pagination, 'json');
+        $serializedEntity = $this->container->get('serializer')->serialize($album, 'json');
 
         return new Response($serializedEntity);
 
@@ -56,5 +56,16 @@ class MainController extends Controller
 //            'album'      => $album
 //            'images'      => $images
 //        ));
+    }
+
+    public function getHomePageAction()
+    {
+        $em = $this->getDoctrine();
+
+        $entities = $em->getRepository('GalleryBundle:Album')->findAll();
+
+        $serializedEntity = $this->container->get('serializer')->serialize($entities, 'json');
+
+        return new Response($serializedEntity);
     }
 }

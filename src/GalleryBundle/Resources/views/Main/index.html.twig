@@ -1,13 +1,17 @@
-{% extends 'GalleryBundle:Main:base.html.twig' %}
+<html>
+<head>
+    <title>GalleryApp</title>
+    <meta name="description" content="FeedApp">
+    <script src="{{ asset('/app/dist/app.min.js') }}"></script>
 
-{% block body %}
-{% for album in albums %}
-    <div>
-        <span>
-            <a href="{{ path('album_show', { 'id': album.id }) }}">
-            {{ album.name }}
-            </a>
-        </span>
-    </div>
-{% endfor %}
-{% endblock %}
+</head>
+
+<body>
+<header data-role="header"></header>
+
+<div id="main" class="container-fluid" data-role="content">
+
+
+</div>
+</body>
+</html>

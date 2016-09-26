@@ -1,35 +1,82 @@
 $  = require 'jquery'
-#_  = require 'underscore'
-#Mn = require 'backbone.marionette'
-
 window._ = require('underscore')
-# Backbone can't see it otherwise
 Backbone = require('backbone')
-# Use the jQuery from the script tag
 Backbone.$ = $
 Backbone.Marionette = require('backbone.marionette')
-Backbone.Marionette.$ = Backbone.$;
+Backbone.Marionette.$ = Backbone.$
 
-TodoMVC = new Backbone.Marionette.Application()
+FeedTemplateBasic = '<div>
+    <b><a href="#album/<%= id %>"><%= name %></a></b>
+    <br/>
+</div>'
 
-# Item view
-ItemView = Backbone.Marionette.ItemView.extend(
-  template: '#itemTemplate'
-  tagName: 'tr')
-# Collection view
-CollectionView = Backbone.Marionette.CollectionView.extend(
-  childView: ItemView
-  tagName: 'tbody')
+App = new Backbone.Marionette.Application()
+App.addRegions
+  headerRegion: 'header'
+  mainRegion: '#main'
+App.addInitializer ->
+  Backbone.history.start()
 
-EmailController = showEmail: (email) ->
-console.log('controller constract')
+AppRouter = Backbone.Marionette.AppRouter.extend(appRoutes:
+  '': 'feed'
+  'album/:id':'AlbumDetails')
 
-MyRouter = TodoMVC.AppRouter.extend(
-  controller: EmailController
-  appRoutes: 'album/:album': 'showEmail'
-  onRoute: (name, path, args) ->
-    console.log 'User navigated to ' + path
+Album = Backbone.Model.extend(
+    urlRoot: '/api/album/'
+  defaults:
+    id: ''
+    name: ''
+    images: '')
+
+AlbumCollection = Backbone.Collection.extend(
+  model: Album
+  url: '/api/homepage')
+
+FeedItemView = Backbone.Marionette.ItemView.extend(
+  template: _.template(FeedTemplateBasic)
+  displayMode: 'full'
+  model: new Album({})
+  initialize: (options) ->
+    @model.listenTo this, 'sync', @render
+    if options.itemId
+      @model.set 'id', options.itemId
+      @model.fetch()
+    onRender: ->
+      console.log(123)
 )
+
+FeedCollectionView = Backbone.Marionette.CollectionView.extend(
+  tagName: 'ul'
+  childView: FeedItemView
+  filterString: null
+  initialize: (options) ->
+    @collection = new AlbumCollection()
+    @collection.fetch()
+  showCollection: ->
+    self = this
+    itemView = @getItemView()
+    @collection.each (item, index) ->
+      if self.filterString != null and (self.filterString.length == 0 or !self.filter(item))
+        return
+      self.addItemView item, itemView, index
+  itemViewOptions: (model, index) ->
+    { displayMode: 'short' }
+)
+
+
+AppController = Backbone.Marionette.Controller.extend(
+  feed: ->
+    App.mainRegion.show new FeedCollectionView()
+  AlbumDetails: (albumId) ->
+    App.mainRegion.show new FeedItemView({
+      displayMode: 'full',
+      itemId: albumId})
+)
+
+App.appRouter = new AppRouter(controller: new AppController())
+
+App.start()
+
 
 #rebindNavigation = ->
 #  $('#paginationHtml A').click ->
@@ -56,10 +103,3 @@ MyRouter = TodoMVC.AppRouter.extend(
 #
 #$(window).bind 'popstate', ->
 #  loadData document.location
-
-
-#
-#$(document).ready ->
-#  console.log(6453432)
-
-
